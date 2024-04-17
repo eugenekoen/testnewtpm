@@ -63,19 +63,33 @@
             }
 
             function loadSong(songName, contentType) {
+                const templateURL = 'https://eugenekoen.github.io/testnewtpm/assets/master/template.html';
                 const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
 
-                fetch(songURL)
+                // Fetch the template HTML first
+                fetch(templateURL)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to load the template.');
+                        return response.text();
+                    })
+                    .then(templateContent => {
+                        // Place the template content into the DOM
+                        document.body.innerHTML = templateContent;
+
+                        // Now fetch the song content
+                        return fetch(songURL);
+                    })
                     .then(response => {
                         if (!response.ok) throw new Error(`Failed to load song content for ${songName}`);
                         return response.text();
                     })
                     .then(songContent => {
+                        // Find the <pre> tag and set its text content
                         const preElement = document.querySelector('pre');
                         if (preElement) {
                             preElement.textContent = songContent;
                         } else {
-                            console.error("No <pre> tag found in the template to display the song content.");
+                            throw new Error("No <pre> tag found in the loaded template.");
                         }
                     })
                     .catch(error => {
