@@ -19,51 +19,6 @@
 
     <!-- Scripts here -->
     <!-- <script type="text/javascript" src="./assets/jquery/jquery.transposer.js"></script> -->
-
-    <script>
-        const songCells = document.querySelectorAll('.clickable');
-        songCells.forEach(cell => cell.addEventListener('click', handleSongClick));
-
-        function handleSongClick(event) {
-            console.log("song cell clicked");
-            const songName = event.target.dataset.songName;
-            const contentType = event.target.dataset.contentType;
-            loadSong(songName, contentType);
-        }
-    </script>
-
-    <script>
-        function loadSong(songName, contentType) {
-            const templateURL = 'assets/master/template.html';
-
-            fetch(templateURL)
-                .then(response => response.text())
-                .then(templateContent => {
-                    // Update relative paths in templateContent
-                    const updatedTemplateContent = updatePaths(templateContent);
-
-                    // Fetch the content of the song
-                    const songURL = `assets/${contentType}/${songName}.txt`;
-                    return fetch(songURL)
-                        .then(response => response.text())
-                        .then(songContent => {
-                            // ... rest of your code ...
-                        });
-                });
-        }
-
-        function updatePaths(content) {
-            // Replace relative paths with absolute or base URL paths
-            // You can use regular expressions or string manipulation techniques here
-            // This is an example using string replacement
-            const baseUrl = window.location.origin; // Get the base URL of your website
-            const updatedContent = content.replace(/\.\.\/\.\.\/style\/(.+?\.css)/g, `${baseUrl}/style/$1`);
-            // Similarly update other paths
-
-            return updatedContent;
-        }
-    </script>
-
     <!------------------>
 
 </head>
