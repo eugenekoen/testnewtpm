@@ -92,14 +92,11 @@
             }
 
             function updatePaths(content) {
-                // Correctly include the repository name in the base URL
                 const baseUrl = 'https://eugenekoen.github.io/testnewtpm/';
 
-                // Update the relative paths for assets to absolute paths
-                // Only update if the path does not start with 'http'
-                content = content.replace(/(href|src)="([^:"]+)"/g, function (match, p1, p2) {
-                    return p2.startsWith('http') ? match : `${p1}="${baseUrl}${p2.replace(/^\.\.\//, '')}"`;
-                });
+                // Correcting the paths inside the fetched HTML content
+                content = content.replace(/"\.\.\/\.\.\/style\//g, '"' + baseUrl + 'style/');
+                content = content.replace(/"\.\.\/jquery\//g, '"' + baseUrl + 'jquery/');
 
                 return content;
             }
