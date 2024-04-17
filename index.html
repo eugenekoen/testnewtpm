@@ -96,6 +96,7 @@
                 // This is an example using string replacement
                 const baseUrl = window.location.origin; // Get the base URL of your website
                 const updatedContent = content.replace(/\.\.\/\.\.\/style\/(.+?\.css)/g, `${baseUrl}/style/$1`);
+
                 // Similarly update other paths
 
                 return updatedContent;
