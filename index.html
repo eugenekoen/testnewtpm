@@ -44,7 +44,8 @@
                 <!-- SONG 1 -->
                 <tr>
                     <td>This is Amazing Grace</td>
-                    <td class="clickable" data-song-name="this-is-amazing-grace" data-content-type="chords">Chords</td>
+                    <td class="clickable" data-song-name="this-is-amazing-grace" data-content-type="chords"
+                        data-target="song-content">Chords</td>
                     <td class="clickable" data-song-name="this-is-amazing-grace" data-content-type="lyrics">Lyrics</td>
                 </tr>
             </tbody>
@@ -63,7 +64,7 @@
             }
 
             function loadSong(songName, contentType) {
-                const songURL = `https://eugenekoen.github.io/testnewtpm/assets/<span class="math-inline">\{contentType\}/</span>{songName}.txt`;
+                const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
 
                 fetch(songURL)
                     .then(response => {
