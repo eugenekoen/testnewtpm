@@ -72,7 +72,7 @@
                         return response.text();
                     })
                     .then(songContent => {
-                        const templateURL = "./template.html"; // Assuming template.html is in the same directory as index.html
+                        const templateURL = "./assets/master/template.html"; // Assuming template.html is in the same directory as index.html
                         fetch(templateURL)
                             .then(templateResponse => {
                                 if (!templateResponse.ok) throw new Error("Failed to load template");
