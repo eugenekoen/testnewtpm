@@ -21,6 +21,18 @@
     <!-- <script type="text/javascript" src="./assets/jquery/jquery.transposer.js"></script> -->
 
     <script>
+        const songCells = document.querySelectorAll('.clickable');
+        songCells.forEach(cell => cell.addEventListener('click', handleSongClick));
+
+        function handleSongClick(event) {
+            console.log("song cell clicked");
+            const songName = event.target.dataset.songName;
+            const contentType = event.target.dataset.contentType;
+            loadSong(songName, contentType);
+        }
+    </script>
+
+    <script>
         function loadSong(songName, contentType) {
             const templateURL = 'assets/master/template.html';
 
@@ -84,17 +96,7 @@
         </table>
     </div>
 
-    <script>
-        const songCells = document.querySelectorAll('.clickable');
-        songCells.forEach(cell => cell.addEventListener('click', handleSongClick));
 
-        function handleSongClick(event) {
-            console.log("song cell clicked");
-            const songName = event.target.dataset.songName;
-            const contentType = event.target.dataset.contentType;
-            loadSong(songName, contentType);
-        }
-    </script>
 
 </body>
 
