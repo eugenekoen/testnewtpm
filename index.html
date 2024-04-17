@@ -77,14 +77,11 @@
                         return fetch(songURL)
                             .then(response => response.text())
                             .then(songContent => {
-                                // Here you would typically do something with the fetched song content
-                                // For example, you could update a specific element in your HTML with the song content
-                                // Let's say you have an element with id "songContent" where you want to display the song content
-                                const songContentElement = document.getElementById('songContent');
-                                songContentElement.innerHTML = songContent;
+                                // Here you have both template content and song content
+                                // You can manipulate them as needed
+                                // For example, you can replace placeholders in the template with the song content
 
-                                // You can also manipulate the template content here if needed
-                                // For example, you could replace a placeholder in the template with the fetched song content
+                                // Replace '{{SONG_CONTENT}}' in the template with the fetched song content
                                 const finalContent = updatedTemplateContent.replace('{{SONG_CONTENT}}', songContent);
 
                                 // Finally, update the DOM with the modified template content
