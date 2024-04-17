@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turningpoint Musos</title>
+
+    <!-- Stylesheets here -->
+    <link rel="shortcut icon" href="./style/images/LOGO.jpg" />
+    <link rel="stylesheet" href="./style/mainapp.css">
+    <!-- ---------------- -->
+
+    <!-- Fonts here -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- ---------- -->
+
+    <!-- Scripts here -->
+    <script type="text/javascript" src="./assets/jquery/jquery.transposer.js"></script>
+
+    <script>
+        function loadSong(songName, contentType) {
+            const templateURL = 'assets/master/template.html'; // URL of the template HTML file
+
+            // Fetch the template HTML file
+            fetch(templateURL)
+                .then(response => response.text())
+                .then(templateContent => {
+                    // Fetch the content of the song
+                    const songURL = `assets/${contentType}/${songName}.txt`;
+                    return fetch(songURL)
+                        .then(response => response.text())
+                        .then(songContent => {
+                            // Replace content of <pre> tag in the template with song content
+                            const updatedTemplateContent = templateContent.replace('<pre data-key="A"></pre>', `<pre data-key="A">${songContent}</pre>`);
+
+                            // Create a new HTML document with the updated template content
+                            const parser = new DOMParser();
+                            const templateDoc = parser.parseFromString(updatedTemplateContent, 'text/html');
+
+                            // Update URL and open the new tab with the modified content
+                            const songURL = `song.html?song=${songName}`;
+                            const newWindow = window.open(songURL, '_blank');
+                            newWindow.document.open();
+                            newWindow.document.write(templateDoc.documentElement.innerHTML);
+                            newWindow.document.close();
+                        });
+                });
+        }
+    </script>
+
+    <!------------------>
+
+</head>
+
+<body>
+    <div id="navigation">
+        <div id="textdiv">
+            TURNING POINT MUSOS
+        </div>
+    </div>
+
+    <div>
+        <table id="tableone">
+            <caption>SONG LIST</caption>
+            <thead>
+                <tr>
+                    <td>NAME OF SONG</td>
+                    <td>CHORDS</td>
+                    <td>LYRICS</td>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- SONG 1 -->
+                <tr>
+                    <td>This is Amazing Grace</td>
+                    <td class="clickable" data-song-name="this-is-amazing-grace" data-content-type="chords">Chords</td>
+                    <td class="clickable" data-song-name="this-is-amazing-grace" data-content-type="lyrics">Lyrics</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const songCells = document.querySelectorAll('.clickable');
+        songCells.forEach(cell => cell.addEventListener('click', handleSongClick));
+
+        function handleSongClick(event) {
+            const songName = event.target.dataset.songName;
+            const contentType = event.target.dataset.contentType;
+            loadSong(songName, contentType);
+        }
+    </script>
+
+</body>
+
+</html>
