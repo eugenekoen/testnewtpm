@@ -89,6 +89,7 @@
         songCells.forEach(cell => cell.addEventListener('click', handleSongClick));
 
         function handleSongClick(event) {
+            console.log("song cell clicked");
             const songName = event.target.dataset.songName;
             const contentType = event.target.dataset.contentType;
             loadSong(songName, contentType);
