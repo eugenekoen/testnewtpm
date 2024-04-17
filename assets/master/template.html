@@ -47,16 +47,16 @@
           preElement.textContent = songContent;
 
           // Get the first line (assuming it contains the key)
-          const key = lines.shift().trim();
+          const key = lines[0].trim();
 
           // Set the data-key attribute
           preElement.setAttribute('data-key', key);
 
           // Hide the first line
-          preElement.style.display = 'none';
+          preElement.innerHTML = preElement.innerHTML.replace(key, '');
 
           // Set the document title to the first line of the song content
-          document.title = lines[0].trim();
+          document.title = lines[1].trim();
         } else {
           console.error("No <pre> tag found in the template.");
         }
@@ -65,6 +65,7 @@
       }
     });
   </script>
+
 
 
 
