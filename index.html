@@ -57,54 +57,34 @@
             songCells.forEach(cell => cell.addEventListener('click', handleSongClick));
 
             function handleSongClick(event) {
-                console.log("Song cell clicked");
                 const songName = event.target.dataset.songName;
                 const contentType = event.target.dataset.contentType;
                 loadSong(songName, contentType);
             }
 
             function loadSong(songName, contentType) {
-                const templateURL = 'https://eugenekoen.github.io/testnewtpm/assets/master/template.html';
+                const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
 
-                fetch(templateURL)
+                fetch(songURL)
                     .then(response => {
-                        if (!response.ok) throw new Error('Failed to load template');
+                        if (!response.ok) throw new Error(`Failed to load song content for ${songName}`);
                         return response.text();
                     })
-                    .then(templateContent => {
-                        const updatedTemplateContent = updatePaths(templateContent);
-
-                        const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
-                        return fetch(songURL)
-                            .then(response => {
-                                if (!response.ok) throw new Error(`Failed to load song content for ${songName}`);
-                                return response.text();
-                            })
-                            .then(songContent => {
-                                const finalContent = updatedTemplateContent.replace('{{SONG_CONTENT}}', songContent);
-                                document.body.innerHTML = finalContent;
-                            });
+                    .then(songContent => {
+                        const preElement = document.querySelector('pre');
+                        if (preElement) {
+                            preElement.textContent = songContent;
+                        } else {
+                            console.error("No <pre> tag found in the template to display the song content.");
+                        }
                     })
                     .catch(error => {
                         console.error("Error: ", error.message);
                         document.body.innerHTML = `<p>Error loading content: ${error.message}</p>`;
                     });
             }
-            function updatePaths(content) {
-                const baseUrl = 'https://eugenekoen.github.io/testnewtpm/testnewtpm/';
-
-                // Correctly update all relative paths for stylesheets
-                content = content.replace(/"\.\.\/\.\.\/style\//g, '"' + baseUrl + 'style/');
-                content = content.replace(/"\.\.\/style\//g, '"' + baseUrl + 'style/');
-                content = content.replace(/"\/style\//g, '"' + baseUrl + 'style/');
-
-                // Correctly update all relative paths for jQuery scripts
-                content = content.replace(/"\.\.\/jquery\//g, '"' + baseUrl + 'jquery/');
-                content = content.replace(/"\/jquery\//g, '"' + baseUrl + 'jquery/');
-
-                return content;
-            }
         });
+
     </script>
 
 
