@@ -63,7 +63,7 @@
             }
 
             function loadSong(songName, contentType) {
-                const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
+                const songURL = `https://eugenekoen.github.io/testnewtpm/assets/<span class="math-inline">\{contentType\}/</span>{songName}.txt`;
 
                 fetch(songURL)
                     .then(response => {
