@@ -22,34 +22,34 @@
 
     <script>
         function loadSong(songName, contentType) {
-            const templateURL = 'https://eugenekoen.github.io/testnewtpm/assets/master/template.html'; // Update with your GitHub Pages URL
+            const templateURL = 'assets/master/template.html';
 
-            // Fetch the template HTML file
-            fetch(templateURL)
+            fetch(templateUrl)
                 .then(response => response.text())
                 .then(templateContent => {
+                    // Update relative paths in templateContent
+                    const updatedTemplateContent = updatePaths(templateContent);
+
                     // Fetch the content of the song
-                    const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`; // Update with your GitHub Pages URL
+                    const songURL = `assets/${contentType}/${songName}.txt`;
                     return fetch(songURL)
                         .then(response => response.text())
                         .then(songContent => {
-                            // Replace content of <pre> tag in the template with song content
-                            const updatedTemplateContent = templateContent.replace('<pre data-key="A"></pre>', `<pre data-key="A">${songContent}</pre>`);
-
-                            // Create a new HTML document with the updated template content
-                            const parser = new DOMParser();
-                            const templateDoc = parser.parseFromString(updatedTemplateContent, 'text/html');
-
-                            // Update URL and open the new tab with the modified content
-                            const songURL = `song.html?song=${songName}`;
-                            const newWindow = window.open(songURL, '_blank');
-                            newWindow.document.open();
-                            newWindow.document.write(templateDoc.documentElement.innerHTML);
-                            newWindow.document.close();
+                            // ... rest of your code ...
                         });
                 });
         }
 
+        function updatePaths(content) {
+            // Replace relative paths with absolute or base URL paths
+            // You can use regular expressions or string manipulation techniques here
+            // This is an example using string replacement
+            const baseUrl = window.location.origin; // Get the base URL of your website
+            const updatedContent = content.replace(/\.\.\/\.\.\/style\/(.+?\.css)/g, `${baseUrl}/style/$1`);
+            // Similarly update other paths
+
+            return updatedContent;
+        }
     </script>
 
     <!------------------>
