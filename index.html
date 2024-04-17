@@ -72,12 +72,25 @@
                         return response.text();
                     })
                     .then(songContent => {
-                        const preElement = document.querySelector('pre');
-                        if (preElement) {
-                            preElement.textContent = songContent;
-                        } else {
-                            console.error("No <pre> tag found in the template to display the song content.");
-                        }
+                        const templateURL = "./template.html"; // Assuming template.html is in the same directory as index.html
+                        fetch(templateUrl)
+                            .then(templateResponse => {
+                                if (!templateResponse.ok) throw new Error("Failed to load template");
+                                return templateResponse.text();
+                            })
+                            .then(templateContent => {
+                                const template = document.createElement('div');
+                                template.innerHTML = templateContent;
+                                const preElement = template.querySelector('pre');
+                                if (preElement) {
+                                    preElement.textContent = songContent;
+                                    // Display the modified template content (consider using innerHTML with caution for security reasons)
+                                    document.body.innerHTML = template.innerHTML;
+                                } else {
+                                    console.error("No <pre> tag found in the template.");
+                                }
+                            })
+                            .catch(error => console.error("Error loading template:", error.message));
                     })
                     .catch(error => {
                         console.error("Error: ", error.message);
