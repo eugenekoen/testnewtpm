@@ -33,10 +33,30 @@
 </head>
 
 <body>
-  <pre data-key="A">
+  <pre id="songContent" data-key="A">
 
 
   </pre>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const songName = params.get('songName');
+      const contentType = params.get('contentType');
+      const songContent = params.get('songContent');
+
+      if (songName && contentType && songContent) {
+        const preElement = document.getElementById('songContent');
+        if (preElement) {
+          preElement.textContent = songContent;
+        } else {
+          console.error("No <pre> tag found in the template.");
+        }
+      } else {
+        console.error("Missing song parameters in the URL.");
+      }
+    });
+  </script>
+
 
 </body>
 

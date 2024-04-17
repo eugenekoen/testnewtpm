@@ -65,31 +65,17 @@
 
             function loadSong(songName, contentType) {
                 const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
+                const templateURL = "./assets/master/template.html";
 
+                // Fetch the song content
                 fetch(songURL)
                     .then(response => {
                         if (!response.ok) throw new Error(`Failed to load song content for ${songName}`);
                         return response.text();
                     })
                     .then(songContent => {
-                        const templateURL = "./assets/master/template.html";
-                        fetch(templateURL)
-                            .then(templateResponse => {
-                                if (!templateResponse.ok) throw new Error("Failed to load template");
-                                return templateResponse.text();
-                            })
-                            .then(templateContent => {
-                                const template = document.createElement('div');
-                                template.innerHTML = templateContent;
-                                const preElement = template.querySelector('pre');
-                                if (preElement) {
-                                    preElement.textContent = songContent;
-                                    document.body.innerHTML = template.innerHTML; // Replace the whole body with template content
-                                } else {
-                                    console.error("No <pre> tag found in the template.");
-                                }
-                            })
-                            .catch(error => console.error("Error loading template:", error.message));
+                        // Navigate to template.html
+                        window.location.href = templateURL + `?songName=${encodeURIComponent(songName)}&contentType=${encodeURIComponent(contentType)}&songContent=${encodeURIComponent(songContent)}`;
                     })
                     .catch(error => {
                         console.error("Error: ", error.message);
