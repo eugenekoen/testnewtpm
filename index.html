@@ -22,14 +22,14 @@
 
     <script>
         function loadSong(songName, contentType) {
-            const templateURL = 'assets/master/template.html'; // URL of the template HTML file
+            const templateURL = 'https://eugenekoen.github.io/testnewtpm/assets/master/template.html'; // Update with your GitHub Pages URL
 
             // Fetch the template HTML file
             fetch(templateURL)
                 .then(response => response.text())
                 .then(templateContent => {
                     // Fetch the content of the song
-                    const songURL = `assets/${contentType}/${songName}.txt`;
+                    const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`; // Update with your GitHub Pages URL
                     return fetch(songURL)
                         .then(response => response.text())
                         .then(songContent => {
@@ -49,6 +49,7 @@
                         });
                 });
         }
+
     </script>
 
     <!------------------>
