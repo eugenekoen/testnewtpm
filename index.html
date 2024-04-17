@@ -57,7 +57,7 @@
             songCells.forEach(cell => cell.addEventListener('click', handleSongClick));
 
             function handleSongClick(event) {
-                console.log("song cell clicked");
+                console.log("Song cell clicked");
                 const songName = event.target.dataset.songName;
                 const contentType = event.target.dataset.contentType;
                 loadSong(songName, contentType);
@@ -67,37 +67,34 @@
                 const templateURL = 'https://eugenekoen.github.io/testnewtpm/assets/master/template.html';
 
                 fetch(templateURL)
-                    .then(response => response.text())
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to load template');
+                        return response.text();
+                    })
                     .then(templateContent => {
-                        // Update relative paths in templateContent
                         const updatedTemplateContent = updatePaths(templateContent);
 
-                        // Fetch the content of the song
                         const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
                         return fetch(songURL)
-                            .then(response => response.text())
+                            .then(response => {
+                                if (!response.ok) throw new Error(`Failed to load song content for ${songName}`);
+                                return response.text();
+                            })
                             .then(songContent => {
-                                // Here you have both template content and song content
-                                // You can manipulate them as needed
-                                // For example, you can replace placeholders in the template with the song content
-
-                                // Replace '{{SONG_CONTENT}}' in the template with the fetched song content
                                 const finalContent = updatedTemplateContent.replace('{{SONG_CONTENT}}', songContent);
-
-                                // Finally, update the DOM with the modified template content
                                 document.body.innerHTML = finalContent;
                             });
+                    })
+                    .catch(error => {
+                        console.error("Error: ", error.message);
+                        document.body.innerHTML = `<p>Error loading content: ${error.message}</p>`;
                     });
             }
 
-            // function updatePaths(content) {
-            //     // Replace relative paths with absolute or base URL paths
-            //     // Exclude CSS paths from being replaced to avoid malformed URLs
-            //     const updatedContent = content.replace(/\.\.\/\.\.\/style\/(.+?\.css)/g, '../style/$1');
-            //     // Similarly update other paths
-
-            //     return updatedContent;
-            // }
+            function updatePaths(content) {
+                const baseUrl = 'https://eugenekoen.github.io/testnewtpm/style/';
+                return content.replace(/\.\.\/\.\.\/style\/(.*?)\.css/g, `${baseUrl}$1.css`);
+            }
         });
     </script>
 
