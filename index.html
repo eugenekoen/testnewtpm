@@ -90,14 +90,14 @@
                     });
             }
 
-            function updatePaths(content) {
-                // Replace relative paths with absolute or base URL paths
-                // Exclude CSS paths from being replaced to avoid malformed URLs
-                const updatedContent = content.replace(/\.\.\/\.\.\/style\/(.+?\.css)/g, '../style/$1');
-                // Similarly update other paths
+            // function updatePaths(content) {
+            //     // Replace relative paths with absolute or base URL paths
+            //     // Exclude CSS paths from being replaced to avoid malformed URLs
+            //     const updatedContent = content.replace(/\.\.\/\.\.\/style\/(.+?\.css)/g, '../style/$1');
+            //     // Similarly update other paths
 
-                return updatedContent;
-            }
+            //     return updatedContent;
+            // }
         });
     </script>
 
