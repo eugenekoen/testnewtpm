@@ -36,7 +36,7 @@
         function loadSong(songName, contentType) {
             const templateURL = 'assets/master/template.html';
 
-            fetch(templateUrl)
+            fetch(templateURL)
                 .then(response => response.text())
                 .then(templateContent => {
                     // Update relative paths in templateContent
