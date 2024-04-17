@@ -90,13 +90,17 @@
                         document.body.innerHTML = `<p>Error loading content: ${error.message}</p>`;
                     });
             }
-
             function updatePaths(content) {
                 const baseUrl = 'https://eugenekoen.github.io/testnewtpm/';
 
-                // Correcting the paths inside the fetched HTML content
+                // Correctly update all relative paths for stylesheets
                 content = content.replace(/"\.\.\/\.\.\/style\//g, '"' + baseUrl + 'style/');
+                content = content.replace(/"\.\.\/style\//g, '"' + baseUrl + 'style/');
+                content = content.replace(/"\/style\//g, '"' + baseUrl + 'style/');
+
+                // Correctly update all relative paths for jQuery scripts
                 content = content.replace(/"\.\.\/jquery\//g, '"' + baseUrl + 'jquery/');
+                content = content.replace(/"\/jquery\//g, '"' + baseUrl + 'jquery/');
 
                 return content;
             }
