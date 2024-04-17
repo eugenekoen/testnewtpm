@@ -41,22 +41,19 @@
         const preElement = document.getElementById('songContent');
         if (preElement) {
           // Split the song content by line breaks
-          const lines = songContent.split('\n');
+          let lines = songContent.split('\n');
+
+          // Remove the first line (assuming it contains the key)
+          const key = lines.shift().trim();
 
           // Set the text content of the pre element
-          preElement.textContent = songContent;
-
-          // Get the first line (assuming it contains the key)
-          const key = lines[0].trim();
+          preElement.textContent = lines.join('\n');
 
           // Set the data-key attribute
           preElement.setAttribute('data-key', key);
 
-          // Hide the first line
-          preElement.innerHTML = preElement.innerHTML.replace(key, '');
-
-          // Set the document title to the first line of the song content
-          document.title = lines[1].trim();
+          // Set the document title to the first line of the remaining song content
+          document.title = lines[0].trim();
         } else {
           console.error("No <pre> tag found in the template.");
         }
@@ -65,6 +62,7 @@
       }
     });
   </script>
+
 
 
 

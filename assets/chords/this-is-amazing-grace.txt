@@ -1,6 +1,6 @@
-B
-THIS IS AMAZING GRACE
-=====================
-
-B  B  C
-This is amazing grace
+  B
+  THIS IS AMAZING GRACE
+  =====================
+  
+  B  B  C
+  This is amazing grace
