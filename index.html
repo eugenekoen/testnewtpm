@@ -74,35 +74,34 @@
             } else {
                 console.error("No <pre> tag found in the template.");
             }
-        });
 
-        // Inside the loadSong function
-        function loadSong(songName, contentType) {
-            const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
+            // Inside the loadSong function
+            function loadSong(songName, contentType) {
+                const songURL = `https://eugenekoen.github.io/testnewtpm/assets/${contentType}/${songName}.txt`;
 
-            fetch(songURL)
-                .then(response => {
-                    if (!response.ok) throw new Error(`Failed to load song content for ${songName}`);
-                    return response.text();
-                })
-                .then(songContent => {
-                    // Create a container to hold the song content
-                    const songContainer = document.createElement('div');
-                    songContainer.innerHTML = songContent;
+                fetch(songURL)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Failed to load song content for ${songName}`);
+                        return response.text();
+                    })
+                    .then(songContent => {
+                        // Create a container to hold the song content
+                        const songContainer = document.createElement('div');
+                        songContainer.innerHTML = songContent;
 
-                    // Replace the content of the template's <pre> tag with the song content
-                    const preElement = document.querySelector('pre');
-                    if (preElement) {
-                        preElement.textContent = songContainer.innerHTML;
-                    } else {
-                        console.error("No <pre> tag found in the template.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error: ", error.message);
-                    document.body.innerHTML = `<p>Error loading content: ${error.message}</p>`;
-                });
-        }
+                        // Replace the content of the template's <pre> tag with the song content
+                        const preElement = document.querySelector('pre');
+                        if (preElement) {
+                            preElement.textContent = songContainer.innerHTML;
+                        } else {
+                            console.error("No <pre> tag found in the template.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error: ", error.message);
+                        document.body.innerHTML = `<p>Error loading content: ${error.message}</p>`;
+                    });
+            }
 
         });
 
