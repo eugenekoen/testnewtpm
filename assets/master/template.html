@@ -41,6 +41,15 @@
         const preElement = document.getElementById('songContent');
         if (preElement) {
           preElement.textContent = songContent;
+
+          // Split the song content by line breaks
+          const lines = songContent.split('\n');
+
+          // Get the first line (assuming it contains the title)
+          const firstLine = lines[0].trim();
+
+          // Set the document title to the first line of the song content
+          document.title = firstLine;
         } else {
           console.error("No <pre> tag found in the template.");
         }
