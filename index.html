@@ -72,7 +72,7 @@
                         return response.text();
                     })
                     .then(songContent => {
-                        const templateURL = "./assets/master/template.html"; // Assuming template.html is in the same directory as index.html
+                        const templateURL = "./assets/master/template.html";
                         fetch(templateURL)
                             .then(templateResponse => {
                                 if (!templateResponse.ok) throw new Error("Failed to load template");
@@ -84,8 +84,7 @@
                                 const preElement = template.querySelector('pre');
                                 if (preElement) {
                                     preElement.textContent = songContent;
-                                    // Display the modified template content (consider using innerHTML with caution for security reasons)
-                                    document.body.innerHTML = template.innerHTML;
+                                    document.body.innerHTML = template.innerHTML; // Replace the whole body with template content
                                 } else {
                                     console.error("No <pre> tag found in the template.");
                                 }
@@ -97,6 +96,7 @@
                         document.body.innerHTML = `<p>Error loading content: ${error.message}</p>`;
                     });
             }
+
         });
 
     </script>
