@@ -92,8 +92,16 @@
             }
 
             function updatePaths(content) {
-                const baseUrl = 'https://eugenekoen.github.io/testnewtpm/style/';
-                return content.replace(/\.\.\/\.\.\/style\/(.*?)\.css/g, `${baseUrl}$1.css`);
+                // Base URL for the stylesheets and scripts
+                const baseUrl = 'https://eugenekoen.github.io/testnewtpm/';
+
+                // Update the relative paths for assets to absolute paths
+                // Only update if the path is not already an absolute URL
+                content = content.replace(/(href|src)="([^:"]+)"/g, function (match, p1, p2) {
+                    return p2.startsWith('http') ? match : `${p1}="${baseUrl}${p2}"`;
+                });
+
+                return content;
             }
         });
     </script>
